@@ -8,10 +8,10 @@ public class Student {
 
     public Student(String name, int age, double grade, String studentID) {
         if (age <= 0) {
-            throw new IllegalArgumentException("Age must be positive.");
+            throw new IllegalArgumentException("Age must be on +.");
         }
         if (grade < 0.0 || grade > 100.0) {
-            throw new IllegalArgumentException("Grade must be in range 0.0 to 100.0.");
+            throw new IllegalArgumentException("Grade have to be betoween 0.0 - 100.0.");
         }
         this.name = name;
         this.age = age;
