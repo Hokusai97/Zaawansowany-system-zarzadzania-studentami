@@ -6,12 +6,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseConnection {
-    private static final String URL = "jdbc:sqlite:students.db";
+    private static final String URL = "jdbc:sqlite:database/students.db";
 
     public static Connection getConnection() {
         try {
             Connection connection = DriverManager.getConnection(URL);
-            initializeDatabase(connection); // Automatyczna inicjalizacja tabeli
+            initializeDatabase(connection); 
             return connection;
         } catch (SQLException e) {
             System.err.println("Error connecting to the database: " + e.getMessage());
