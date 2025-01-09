@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run Main",
+            "request": "launch",
+            "mainClass": "src.Main",
+            "vmArgs": "-cp .;lib/sqlite-jdbc-3.47.2.jar"
+        }
+    ]
+}
