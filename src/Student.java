@@ -13,6 +13,7 @@ public class Student {
         this.studentID = studentID;
     }
 
+    // Gettery i settery
     public String getName() {
         return name;
     }
@@ -43,5 +44,13 @@ public class Student {
 
     public void setStudentID(String studentID) {
         this.studentID = studentID;
+    }
+
+    // Metoda do wyświetlania informacji o studencie
+    public String displayInfo() {
+        return "Student ID: " + studentID +
+               ", Name: " + name +
+               ", Age: " + age +
+               ", Grade: " + grade;
     }
 }

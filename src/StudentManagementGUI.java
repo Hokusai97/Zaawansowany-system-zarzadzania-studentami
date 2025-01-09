@@ -122,7 +122,7 @@ public class StudentManagementGUI {
                     }
 
                     Student student = new Student(name, age, grade, id);
-                    studentManager.updateStudent(id);
+                    studentManager.updateStudent(id, student);
                     outputArea.append("Student updated successfully!\n");
                 } catch (Exception ex) {
                     outputArea.append("Error: " + ex.getMessage() + "\n");
