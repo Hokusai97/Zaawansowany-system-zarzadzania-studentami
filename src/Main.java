@@ -7,7 +7,7 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             try {
                 // Tworzenie implementacji menedżera studentów
-                StudentManager studentManager = new StudentManagerImpl();
+                StudentManagerImpl studentManager = new StudentManagerImpl();
 
                 // Tworzenie GUI i uruchamianie aplikacji
                 StudentManagementGUI gui = new StudentManagementGUI(studentManager);

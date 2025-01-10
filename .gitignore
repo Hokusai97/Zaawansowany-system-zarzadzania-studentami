@@ -1,0 +1,3 @@
+# Ignorowanie plików kompilacji
+*.class
+bin/

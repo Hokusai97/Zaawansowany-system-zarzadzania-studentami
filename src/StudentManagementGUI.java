@@ -3,162 +3,120 @@ package src;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
 
 public class StudentManagementGUI {
-    private JFrame frame;
-    private JTextField studentIdField;
-    private JTextField nameField;
-    private JTextField ageField;
-    private JTextField gradeField;
-    private JTextArea outputArea;
-    private StudentManager studentManager;
+    private final StudentManagerImpl studentManager;
 
-    public StudentManagementGUI(StudentManager studentManager) {
+    public StudentManagementGUI(StudentManagerImpl studentManager) {
         this.studentManager = studentManager;
-        initialize();
-    }
-
-    private void initialize() {
-        frame = new JFrame("Student Management System");
-        frame.setBounds(100, 100, 600, 400);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(new BorderLayout());
-
-        // Panel wejściowy
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(5, 2));
-        frame.getContentPane().add(inputPanel, BorderLayout.NORTH);
-
-        inputPanel.add(new JLabel("Student ID:"));
-        studentIdField = new JTextField();
-        inputPanel.add(studentIdField);
-
-        inputPanel.add(new JLabel("Name:"));
-        nameField = new JTextField();
-        inputPanel.add(nameField);
-
-        inputPanel.add(new JLabel("Age:"));
-        ageField = new JTextField();
-        inputPanel.add(ageField);
-
-        inputPanel.add(new JLabel("Grade:"));
-        gradeField = new JTextField();
-        inputPanel.add(gradeField);
-
-        // Panel przycisków
-        JPanel buttonPanel = new JPanel();
-        frame.getContentPane().add(buttonPanel, BorderLayout.CENTER);
-
-        JButton addButton = new JButton("Add Student");
-        buttonPanel.add(addButton);
-
-        JButton removeButton = new JButton("Remove Student");
-        buttonPanel.add(removeButton);
-
-        JButton updateButton = new JButton("Update Student");
-        buttonPanel.add(updateButton);
-
-        JButton displayButton = new JButton("Display All Students");
-        buttonPanel.add(displayButton);
-
-        JButton averageButton = new JButton("Calculate Average");
-        buttonPanel.add(averageButton);
-
-        // Obszar wyjściowy
-        outputArea = new JTextArea();
-        outputArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(outputArea);
-        frame.getContentPane().add(scrollPane, BorderLayout.SOUTH);
-
-        // Obsługa zdarzeń
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String id = studentIdField.getText();
-                    String name = nameField.getText();
-                    int age = Integer.parseInt(ageField.getText());
-                    double grade = Double.parseDouble(gradeField.getText());
-
-                    if (age <= 0 || grade < 0.0 || grade > 100.0) {
-                        throw new IllegalArgumentException("Invalid age or grade.");
-                    }
-
-                    Student student = new Student(name, age, grade, id);
-                    studentManager.addStudent(student);
-                    outputArea.append("Student added successfully!\n");
-                } catch (Exception ex) {
-                    outputArea.append("Error: " + ex.getMessage() + "\n");
-                }
-            }
-        });
-
-        removeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String id = studentIdField.getText();
-                    studentManager.removeStudent(id);
-                    outputArea.append("Student removed successfully!\n");
-                } catch (Exception ex) {
-                    outputArea.append("Error: " + ex.getMessage() + "\n");
-                }
-            }
-        });
-
-        updateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String id = studentIdField.getText();
-                    String name = nameField.getText();
-                    int age = Integer.parseInt(ageField.getText());
-                    double grade = Double.parseDouble(gradeField.getText());
-
-                    if (age <= 0 || grade < 0.0 || grade > 100.0) {
-                        throw new IllegalArgumentException("Invalid age or grade.");
-                    }
-
-                    Student student = new Student(name, age, grade, id);
-                    studentManager.updateStudent(id, student);
-                    outputArea.append("Student updated successfully!\n");
-                } catch (Exception ex) {
-                    outputArea.append("Error: " + ex.getMessage() + "\n");
-                }
-            }
-        });
-
-        displayButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    List<Student> students = studentManager.displayAllStudents();
-                    outputArea.append("Students:\n");
-                    for (Student s : students) {
-                        outputArea.append(s.getName() + "\n");
-                    }
-                } catch (Exception ex) {
-                    outputArea.append("Error: " + ex.getMessage() + "\n");
-                }
-            }
-        });
-
-        averageButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    double average = studentManager.calculateAverageGrade();
-                    outputArea.append("Average Grade: " + average + "\n");
-                } catch (Exception ex) {
-                    outputArea.append("Error: " + ex.getMessage() + "\n");
-                }
-            }
-        });
     }
 
     public void show() {
+        JFrame frame = new JFrame("Student Management System");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(600, 500);
+
+        JPanel inputPanel = new JPanel(new GridLayout(5, 2));
+        frame.add(inputPanel, BorderLayout.NORTH);
+
+        JLabel idLabel = new JLabel("Student ID:");
+        JTextField idField = new JTextField();
+        JLabel nameLabel = new JLabel("Name:");
+        JTextField nameField = new JTextField();
+        JLabel ageLabel = new JLabel("Age:");
+        JTextField ageField = new JTextField();
+        JLabel gradeLabel = new JLabel("Grade:");
+        JTextField gradeField = new JTextField();
+
+        inputPanel.add(idLabel);
+        inputPanel.add(idField);
+        inputPanel.add(nameLabel);
+        inputPanel.add(nameField);
+        inputPanel.add(ageLabel);
+        inputPanel.add(ageField);
+        inputPanel.add(gradeLabel);
+        inputPanel.add(gradeField);
+
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 5));
+        frame.add(buttonPanel, BorderLayout.CENTER);
+
+        JButton addButton = new JButton("Add Student");
+        JButton updateButton = new JButton("Update Student");
+        JButton removeButton = new JButton("Remove Student");
+        JButton displayButton = new JButton("Display All");
+        JButton avgButton = new JButton("Calculate Average");
+
+        buttonPanel.add(addButton);
+        buttonPanel.add(updateButton);
+        buttonPanel.add(removeButton);
+        buttonPanel.add(displayButton);
+        buttonPanel.add(avgButton);
+
+        JTextArea outputArea = new JTextArea();
+        outputArea.setEditable(false);
+        frame.add(new JScrollPane(outputArea), BorderLayout.SOUTH);
+
+        addButton.addActionListener(e -> {
+            try {
+                String id = idField.getText().trim();
+                String name = nameField.getText().trim();
+                int age = Integer.parseInt(ageField.getText().trim());
+                double grade = Double.parseDouble(gradeField.getText().trim());
+
+                Student student = new Student(name, age, grade, id);
+                studentManager.addStudent(student);
+                outputArea.append("Student added successfully!\n");
+            } catch (Exception ex) {
+                outputArea.append("Error: " + ex.getMessage() + "\n");
+            }
+        });
+
+        updateButton.addActionListener(e -> {
+            try {
+                String id = idField.getText().trim();
+                String name = nameField.getText().trim();
+                int age = Integer.parseInt(ageField.getText().trim());
+                double grade = Double.parseDouble(gradeField.getText().trim());
+
+                Student student = new Student(name, age, grade, id);
+                studentManager.updateStudent(id, student);
+                outputArea.append("Student updated successfully!\n");
+            } catch (Exception ex) {
+                outputArea.append("Error: " + ex.getMessage() + "\n");
+            }
+        });
+
+        removeButton.addActionListener(e -> {
+            try {
+                String id = idField.getText().trim();
+                studentManager.removeStudent(id);
+                outputArea.append("Student removed successfully!\n");
+            } catch (Exception ex) {
+                outputArea.append("Error: " + ex.getMessage() + "\n");
+            }
+        });
+
+        displayButton.addActionListener(e -> {
+            try {
+                outputArea.setText("");
+                for (Student student : studentManager.displayAllStudents()) {
+                    outputArea.append(student.getStudentID() + ": " + student.getName() +
+                            ", Age: " + student.getAge() + ", Grade: " + student.getGrade() + "\n");
+                }
+            } catch (Exception ex) {
+                outputArea.append("Error: " + ex.getMessage() + "\n");
+            }
+        });
+
+        avgButton.addActionListener(e -> {
+            try {
+                double avgGrade = studentManager.calculateAverageGrade();
+                outputArea.append("Average Grade: " + avgGrade + "\n");
+            } catch (Exception ex) {
+                outputArea.append("Error: " + ex.getMessage() + "\n");
+            }
+        });
+
         frame.setVisible(true);
     }
 }

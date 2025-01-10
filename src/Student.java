@@ -7,13 +7,15 @@ public class Student {
     private String studentID;
 
     public Student(String name, int age, double grade, String studentID) {
+        if (age <= 0 || grade < 0.0 || grade > 100.0 || studentID.isEmpty()) {
+            throw new IllegalArgumentException("Invalid student data");
+        }
         this.name = name;
         this.age = age;
         this.grade = grade;
         this.studentID = studentID;
     }
 
-    // Gettery i settery
     public String getName() {
         return name;
     }
@@ -27,6 +29,7 @@ public class Student {
     }
 
     public void setAge(int age) {
+        if (age <= 0) throw new IllegalArgumentException("Age must be positive");
         this.age = age;
     }
 
@@ -35,6 +38,7 @@ public class Student {
     }
 
     public void setGrade(double grade) {
+        if (grade < 0.0 || grade > 100.0) throw new IllegalArgumentException("Grade must be between 0 and 100");
         this.grade = grade;
     }
 
@@ -42,15 +46,10 @@ public class Student {
         return studentID;
     }
 
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
-    }
-
-    // Metoda do wyświetlania informacji o studencie
-    public String displayInfo() {
-        return "Student ID: " + studentID +
-               ", Name: " + name +
-               ", Age: " + age +
-               ", Grade: " + grade;
+    public void displayInfo() {
+        System.out.println("Student ID: " + studentID);
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Grade: " + grade);
     }
 }
