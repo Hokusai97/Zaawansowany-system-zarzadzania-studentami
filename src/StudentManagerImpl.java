@@ -12,6 +12,8 @@ public class StudentManagerImpl implements StudentManager {
         return DriverManager.getConnection(url);
     }
 
+
+    
     // Konstruktor klasy
     public StudentManagerImpl() {
         try (Connection conn = connect(); Statement stmt = conn.createStatement()) {
@@ -23,6 +25,8 @@ public class StudentManagerImpl implements StudentManager {
             System.err.println("Error initializing database: " + e.getMessage());
         }
     }
+
+
 
     @Override
     public void addStudent(Student student) {
@@ -38,6 +42,8 @@ public class StudentManagerImpl implements StudentManager {
         }
     }
 
+
+
     @Override
     public void removeStudent(String studentID) {
         String sql = "DELETE FROM students WHERE studentID = ?";
@@ -51,6 +57,8 @@ public class StudentManagerImpl implements StudentManager {
             System.err.println("Error removing student: " + e.getMessage());
         }
     }
+
+
 
     @Override
     public void updateStudent(String studentID, Student student) {
@@ -70,6 +78,8 @@ public class StudentManagerImpl implements StudentManager {
         }
     }
 
+
+
     @Override
     public ArrayList<Student> displayAllStudents() {
         ArrayList<Student> students = new ArrayList<>();
@@ -88,6 +98,8 @@ public class StudentManagerImpl implements StudentManager {
         }
         return students;
     }
+
+
 
     @Override
     public double calculateAverageGrade() {

@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "StudentGUI",
+            "request": "launch",
+            "mainClass": "src.StudentGUI",
+            "projectName": "Zaawansowany-system-zarzadzania-studentami_9307e3ea"
+        },
+        {
+            "type": "java",
             "name": "Run Main",
             "request": "launch",
             "mainClass": "src.Main",

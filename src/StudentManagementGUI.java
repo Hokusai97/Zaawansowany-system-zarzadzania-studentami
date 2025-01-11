@@ -2,7 +2,6 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 public class StudentManagementGUI {
     private final StudentManagerImpl studentManager;
@@ -14,9 +13,10 @@ public class StudentManagementGUI {
     public void show() {
         JFrame frame = new JFrame("Student Management System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 500);
+        frame.setSize(1400, 900);
 
-        JPanel inputPanel = new JPanel(new GridLayout(5, 2));
+        // Panel na górze programu
+        JPanel inputPanel = new JPanel(new GridLayout(4, 2, 10, 10));
         frame.add(inputPanel, BorderLayout.NORTH);
 
         JLabel idLabel = new JLabel("Student ID:");
@@ -28,6 +28,8 @@ public class StudentManagementGUI {
         JLabel gradeLabel = new JLabel("Grade:");
         JTextField gradeField = new JTextField();
 
+
+
         inputPanel.add(idLabel);
         inputPanel.add(idField);
         inputPanel.add(nameLabel);
@@ -37,25 +39,49 @@ public class StudentManagementGUI {
         inputPanel.add(gradeLabel);
         inputPanel.add(gradeField);
 
-        JPanel buttonPanel = new JPanel(new GridLayout(1, 5));
-        frame.add(buttonPanel, BorderLayout.CENTER);
 
-        JButton addButton = new JButton("Add Student");
-        JButton updateButton = new JButton("Update Student");
-        JButton removeButton = new JButton("Remove Student");
-        JButton displayButton = new JButton("Display All");
-        JButton avgButton = new JButton("Calculate Average");
+        // Panel przycisków na dole
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 6, 10, 10));
+        frame.add(buttonPanel, BorderLayout.SOUTH);
+
+
+
+        JButton addButton = createSmallButton("Add student");
+        JButton updateButton = createSmallButton("Update student");
+        JButton removeButton = createSmallButton("Remove student");
+        JButton displayButton = createSmallButton("Display all students");
+        JButton avgButton = createSmallButton("Calculate average grade");
+        JButton helpButton = createSmallButton("Instrucion");
 
         buttonPanel.add(addButton);
         buttonPanel.add(updateButton);
         buttonPanel.add(removeButton);
         buttonPanel.add(displayButton);
         buttonPanel.add(avgButton);
+        buttonPanel.add(helpButton);
 
+
+
+        // Obszar wyświetlania informacji
         JTextArea outputArea = new JTextArea();
         outputArea.setEditable(false);
-        frame.add(new JScrollPane(outputArea), BorderLayout.SOUTH);
+        outputArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        frame.add(new JScrollPane(outputArea), BorderLayout.CENTER);
 
+
+        // Wyświetlanie informacji o tym jak uzywac programu na starcie wlaczenia
+        JOptionPane.showMessageDialog(frame,
+                "How to use?\n"
+                + "- Student ID: 1,2,3,4,5 - unical positive number.\n"
+                + "- Name: Max units 50.\n"
+                + "- Age: have to be positive number .\n"
+                + "- Remove: you can remove student by only Student ID .\n"
+                + "- Grade: 0.0 - 100.0.",
+                "Instruction",
+                JOptionPane.INFORMATION_MESSAGE);
+
+
+        // Obsługa buttonow
         addButton.addActionListener(e -> {
             try {
                 String id = idField.getText().trim();
@@ -70,6 +96,8 @@ public class StudentManagementGUI {
                 outputArea.append("Error: " + ex.getMessage() + "\n");
             }
         });
+
+
 
         updateButton.addActionListener(e -> {
             try {
@@ -86,6 +114,7 @@ public class StudentManagementGUI {
             }
         });
 
+
         removeButton.addActionListener(e -> {
             try {
                 String id = idField.getText().trim();
@@ -95,6 +124,7 @@ public class StudentManagementGUI {
                 outputArea.append("Error: " + ex.getMessage() + "\n");
             }
         });
+
 
         displayButton.addActionListener(e -> {
             try {
@@ -108,6 +138,7 @@ public class StudentManagementGUI {
             }
         });
 
+
         avgButton.addActionListener(e -> {
             try {
                 double avgGrade = studentManager.calculateAverageGrade();
@@ -117,6 +148,28 @@ public class StudentManagementGUI {
             }
         });
 
+
+        helpButton.addActionListener(e -> {
+            JOptionPane.showMessageDialog(frame,
+                    "How to use?\n"
+                    + "- Student ID: 1,2,3,4,5 - unical positive number.\n"
+                    + "- Name: Max units 50.\n"
+                    + "- Age: have to be positive number .\n"
+                    + "- Remove: you can remove student by only Student ID .\n"
+                    + "- Grade: 0.0 - 100.0.",
+                    "Instruction",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+
+
         frame.setVisible(true);
+    }
+
+
+
+    private JButton createSmallButton(String text) {
+        JButton button = new JButton(text);
+        button.setPreferredSize(new Dimension(150, 40)); 
+        return button;
     }
 }

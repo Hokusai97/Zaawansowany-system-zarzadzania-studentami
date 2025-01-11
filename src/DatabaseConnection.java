@@ -14,10 +14,11 @@ public class DatabaseConnection {
             initializeDatabase(connection); 
             return connection;
         } catch (SQLException e) {
-            System.err.println("Error connecting to the database: " + e.getMessage());
+            System.err.println("Error when connecting to the database: " + e.getMessage());
             return null;
         }
     }
+
 
     private static void initializeDatabase(Connection connection) {
         String createTableQuery = "CREATE TABLE IF NOT EXISTS students (" +

@@ -11,8 +11,10 @@ public class StudentGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 400);
 
+
         JPanel panel = new JPanel(new GridLayout(6, 2));
         frame.add(panel, BorderLayout.CENTER);
+
 
         JLabel idLabel = new JLabel("Student ID:");
         JTextField idField = new JTextField();
@@ -23,11 +25,14 @@ public class StudentGUI {
         JLabel gradeLabel = new JLabel("Grade:");
         JTextField gradeField = new JTextField();
 
+
         JButton addButton = new JButton("Add Student");
         JButton displayButton = new JButton("Display All Students");
 
+
         JTextArea outputArea = new JTextArea();
         frame.add(new JScrollPane(outputArea), BorderLayout.SOUTH);
+
 
         addButton.addActionListener(e -> {
             try {
@@ -42,12 +47,16 @@ public class StudentGUI {
             }
         });
 
+
         displayButton.addActionListener(e -> {
             outputArea.setText("");
             for (Student s : manager.displayAllStudents()) {
                 outputArea.append(s.getStudentID() + ": " + s.getName() + ", Age: " + s.getAge() + ", Grade: " + s.getGrade() + "\n");
             }
         });
+
+        
+
 
         panel.add(idLabel);
         panel.add(idField);
@@ -62,6 +71,8 @@ public class StudentGUI {
 
         frame.setVisible(true);
     }
+
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(StudentGUI::new);
