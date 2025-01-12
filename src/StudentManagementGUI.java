@@ -116,6 +116,7 @@ public class StudentManagementGUI {
         });
 
 
+        
         removeButton.addActionListener(e -> {
             try {
                 String id = idField.getText().trim();

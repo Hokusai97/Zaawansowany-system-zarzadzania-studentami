@@ -19,6 +19,7 @@ public class DatabaseConnection {
         }
     }
 
+    
     // Metoda inicjalizująca tabelę w bazie danych
     public static void initializeDatabase() {
         String createTableQuery = "CREATE TABLE IF NOT EXISTS students (" +

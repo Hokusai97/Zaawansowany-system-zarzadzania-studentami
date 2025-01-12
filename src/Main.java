@@ -16,7 +16,7 @@ public class Main {
 
                 gui.show();
             } catch (Exception e) {
-                // Obsługuje wszelkie wyjątki i wykonuje print by wyswietlić szczegóły
+                // Obsługuje  wyjątki i wykonuje print by wyswietlić szczegóły
                 e.printStackTrace();
             }
         });
