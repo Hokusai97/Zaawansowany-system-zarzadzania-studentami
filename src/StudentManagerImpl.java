@@ -3,37 +3,25 @@ package src;
 import java.sql.*;
 import java.util.ArrayList;
 
-// Ścieżka do bazy danych i połączenie 
+// Implementacja interfejsu StudentManager oraz obliczenia na danych studentów w bazie SQLite
 public class StudentManagerImpl implements StudentManager {
-    private final String url = "jdbc:sqlite:database/students.db";
+    private final String url = "jdbc:sqlite:database/students.db"; // Ścieżka do pliku bazy danych SQLite
 
     public Connection connect() throws SQLException {
-        return DriverManager.getConnection(url);
+        return DriverManager.getConnection(url); // Tworzy połączenie z bazą danych
     }
 
-  
-    // Konstruktor klasy
-    public StudentManagerImpl() {
-        try (Connection conn = connect(); Statement stmt = conn.createStatement()) {
-            // Tworzenie tabeli, jeśli nie istnieje
-            String sql = "CREATE TABLE IF NOT EXISTS students (" +
-                         "name TEXT, age INTEGER, grade REAL, studentID TEXT PRIMARY KEY)";
-            stmt.execute(sql);
-        } catch (SQLException e) {
-            System.err.println("Error initializing database: " + e.getMessage());
-        }
-    }
 
-  
+    // SQL do wstawienia nowego rekordu studenta do tabeli "students" i obsługa błędu
     @Override
     public void addStudent(Student student) {
-        // dodaje studenta do bazy danych
         String sql = "INSERT INTO students (name, age, grade, studentID) VALUES (?, ?, ?, ?)";
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, student.getName());
             pstmt.setInt(2, student.getAge());
             pstmt.setDouble(3, student.getGrade());
             pstmt.setString(4, student.getStudentID());
+
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error adding student: " + e.getMessage());
@@ -41,13 +29,13 @@ public class StudentManagerImpl implements StudentManager {
     }
 
 
-
+    // SQL do usunięcia studenta na podstawie jego unikalnego identyfikatora (studentID) i obsługa błędu
     @Override
     public void removeStudent(String studentID) {
-        // Usuwa studenta z bazy danyhc
         String sql = "DELETE FROM students WHERE studentID = ?";
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, studentID);
+
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
                 throw new IllegalArgumentException("Student ID not found");
@@ -57,33 +45,32 @@ public class StudentManagerImpl implements StudentManager {
         }
     }
 
-
-
+        // SQL do aktualizacji rekordu studenta na podstawie jego unikalnego identyfikatora (studentID) i obsługa błędu
     @Override
     public void updateStudent(String studentID, Student student) {
-        // Aktualizuje studenta z bazy danych
         String sql = "UPDATE students SET name = ?, age = ?, grade = ? WHERE studentID = ?";
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, student.getName());
             pstmt.setInt(2, student.getAge());
             pstmt.setDouble(3, student.getGrade());
             pstmt.setString(4, studentID);
+
             int rowsUpdated = pstmt.executeUpdate();
             if (rowsUpdated == 0) {
                 throw new IllegalArgumentException("Student ID not found.");
             }
         } catch (SQLException e) {
             System.err.println("Error while updating student: " + e.getMessage());
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); 
         }
     }
 
-
     @Override
     public ArrayList<Student> displayAllStudents() {
-        // Pobiera liste wszystkich studentwó z bazy danych
+        // Tworzenie listy do przechowywania obiektów student i obsługa błędu
         ArrayList<Student> students = new ArrayList<>();
-        String sql = "SELECT * FROM students";
+        String sql = "SELECT * FROM students"; // SQL do pobrania wszystkiego z tabeli students
+
         try (Connection conn = connect(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 students.add(new Student(
@@ -96,20 +83,20 @@ public class StudentManagerImpl implements StudentManager {
         } catch (SQLException e) {
             System.err.println("Error retrieving students: " + e.getMessage());
         }
+
         return students;
     }
 
-
-
     @Override
     public double calculateAverageGrade() {
-        // Oblicza średnią ocenę studentów
+        // SQL do obliczenia średniej ocen w tabeli "students" i obsługa błędu 
         String sql = "SELECT AVG(grade) AS averageGrade FROM students";
         try (Connection conn = connect(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             return rs.getDouble("averageGrade");
         } catch (SQLException e) {
             System.err.println("Error calculating average grade: " + e.getMessage());
         }
+
         return 0.0;
     }
 }

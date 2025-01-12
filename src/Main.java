@@ -4,19 +4,19 @@ import javax.swing.SwingUtilities;
 
 public class Main {
     public static void main(String[] args) {
-        // Uruchamia GUI w wątku
+        // Inicjalizacja bazy danych
+        DatabaseConnection.initializeDatabase();
+
+        // Uruchamia GUI w wątku Swing
         SwingUtilities.invokeLater(() -> {
             try {
-                // Tworzy instancję implementacji menedżera studentów
                 StudentManagerImpl studentManager = new StudentManagerImpl();
 
-                // Tworzy instancj GUI dla zarządzania studentami
                 StudentManagementGUI gui = new StudentManagementGUI(studentManager);
 
-                // Wyświetla GUI
                 gui.show();
             } catch (Exception e) {
-                // Obsługuje wszelkie wyjątki i drukuje szczegóły 
+                // Obsługuje wszelkie wyjątki i wykonuje print by wyswietlić szczegóły
                 e.printStackTrace();
             }
         });

@@ -13,11 +13,12 @@ public class Student {
         // Walidacja danych wejściowych
         if (age <= 0 || grade < 0.0 || grade > 100.0 || studentID.isEmpty()) {
             throw new IllegalArgumentException("Student not added - invalid student data. Age must be a positive number and grade have to bet between 0 - 100.");
+            // Ustawia imie, wiek, ocene i udinaklne ID studenta
         }
-        this.name = name; // Ustawia imię studenta
-        this.age = age;   // Ustawia wiek studenta
-        this.grade = grade; // Ustawia ocenę studenta
-        this.studentID = studentID; // Ustawia unikalny ID studenta
+        this.name = name; 
+        this.age = age;   
+        this.grade = grade; 
+        this.studentID = studentID; 
     }
 
 

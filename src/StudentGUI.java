@@ -10,7 +10,7 @@ public class StudentGUI {
 
     // Konstruktor klasy GUI
     public StudentGUI() {
-        // Tworzenie głównego okna programu, przycisków, etykiet, pól tekstowych, układ
+        // Tworzenie głównego okna programu, przycisków, etykiet, pól tekstowych i układ
         JFrame frame = new JFrame("Student Management System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Zamyka aplikację po zamknięciu okna
         frame.setSize(500, 400); // Ustawia rozmiar okna
@@ -50,20 +50,18 @@ public class StudentGUI {
                 // Dodawanie studenta za pomocą menedżera
                 manager.addStudent(new Student(name, age, grade, id));
                 
-                // Informacja zwrotna w obszarze wyjściowym
+                // Informacja zwrotna w obszarze wyjściowym i obsługa błędu i wyświetlanie komunikatu o błędzie
                 outputArea.setText("Student added successfully.");
             } catch (Exception ex) {
-                // Obsługa błędów i wyświetlenie komunikatu o błędzie
                 outputArea.setText("Error: " + ex.getMessage());
             }
         });
 
 
-        // Obsługa akcji dla przycisku wyświetlania wszystkich studentów
+        // Obsługa akcji dla przycisku wyświetlania wszystkich studentów, czyszczenie i wyświetlanie
         displayButton.addActionListener(e -> {
-            outputArea.setText(""); // Czyści obszar wyjściowy
+            outputArea.setText(""); 
             for (Student s : manager.displayAllStudents()) {
-                // Wyświetlanie informacji o każdym studencie
                 outputArea.append(s.getStudentID() + ": " + s.getName() + ", Age: " + s.getAge() + ", Grade: " + s.getGrade() + "\n");
             }
         });
@@ -85,9 +83,9 @@ public class StudentGUI {
     }
 
 
-    // Metoda główna do uruchamiania GUI
+    // Metoda główna do uruchamiania GUI 
     public static void main(String[] args) {
-        // Uruchomienie GUI w oddzielnym wątku Swing
+        // uruchumienie GUI w oddzielnym wątku Swing
         SwingUtilities.invokeLater(StudentGUI::new);
     }
 }
