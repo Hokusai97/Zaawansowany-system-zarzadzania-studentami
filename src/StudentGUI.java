@@ -4,16 +4,20 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StudentGUI {
+    // Instancja implementacji menedżera studentów do zarządzania danymi
     private final StudentManagerImpl manager = new StudentManagerImpl();
 
+
+    // Konstruktor klasy GUI
     public StudentGUI() {
+        // Tworzenie głównego okna programu, przycisków, etykiet, pól tekstowych, układ
         JFrame frame = new JFrame("Student Management System");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Zamyka aplikację po zamknięciu okna
+        frame.setSize(500, 400); // Ustawia rozmiar okna
 
 
         JPanel panel = new JPanel(new GridLayout(6, 2));
-        frame.add(panel, BorderLayout.CENTER);
+        frame.add(panel, BorderLayout.CENTER); 
 
 
         JLabel idLabel = new JLabel("Student ID:");
@@ -29,35 +33,43 @@ public class StudentGUI {
         JButton addButton = new JButton("Add Student");
         JButton displayButton = new JButton("Display All Students");
 
-
+        // Obszar wyjściowy do wyświetlania informacji
         JTextArea outputArea = new JTextArea();
-        frame.add(new JScrollPane(outputArea), BorderLayout.SOUTH);
+        frame.add(new JScrollPane(outputArea), BorderLayout.SOUTH); 
 
 
+        // Obsługa akcji dla przycisku dodawania studenta
         addButton.addActionListener(e -> {
             try {
+                // Pobieranie danych z pól tekstowych
                 String id = idField.getText();
                 String name = nameField.getText();
                 int age = Integer.parseInt(ageField.getText());
                 double grade = Double.parseDouble(gradeField.getText());
+                
+                // Dodawanie studenta za pomocą menedżera
                 manager.addStudent(new Student(name, age, grade, id));
+                
+                // Informacja zwrotna w obszarze wyjściowym
                 outputArea.setText("Student added successfully.");
             } catch (Exception ex) {
+                // Obsługa błędów i wyświetlenie komunikatu o błędzie
                 outputArea.setText("Error: " + ex.getMessage());
             }
         });
 
 
+        // Obsługa akcji dla przycisku wyświetlania wszystkich studentów
         displayButton.addActionListener(e -> {
-            outputArea.setText("");
+            outputArea.setText(""); // Czyści obszar wyjściowy
             for (Student s : manager.displayAllStudents()) {
+                // Wyświetlanie informacji o każdym studencie
                 outputArea.append(s.getStudentID() + ": " + s.getName() + ", Age: " + s.getAge() + ", Grade: " + s.getGrade() + "\n");
             }
         });
 
-        
 
-
+        // Dodawanie komponentów do panelu głównego
         panel.add(idLabel);
         panel.add(idField);
         panel.add(nameLabel);
@@ -73,8 +85,9 @@ public class StudentGUI {
     }
 
 
-
+    // Metoda główna do uruchamiania GUI
     public static void main(String[] args) {
+        // Uruchomienie GUI w oddzielnym wątku Swing
         SwingUtilities.invokeLater(StudentGUI::new);
     }
 }

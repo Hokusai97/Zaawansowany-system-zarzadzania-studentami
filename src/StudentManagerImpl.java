@@ -3,17 +3,15 @@ package src;
 import java.sql.*;
 import java.util.ArrayList;
 
+// Ścieżka do bazy danych i połączenie 
 public class StudentManagerImpl implements StudentManager {
-    // Ustaw ścieżkę do bazy danych
     private final String url = "jdbc:sqlite:database/students.db";
 
-    // Metoda do połączenia z bazą danych
     public Connection connect() throws SQLException {
         return DriverManager.getConnection(url);
     }
 
-
-    
+  
     // Konstruktor klasy
     public StudentManagerImpl() {
         try (Connection conn = connect(); Statement stmt = conn.createStatement()) {
@@ -26,10 +24,10 @@ public class StudentManagerImpl implements StudentManager {
         }
     }
 
-
-
+  
     @Override
     public void addStudent(Student student) {
+        // dodaje studenta do bazy danych
         String sql = "INSERT INTO students (name, age, grade, studentID) VALUES (?, ?, ?, ?)";
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, student.getName());
@@ -46,6 +44,7 @@ public class StudentManagerImpl implements StudentManager {
 
     @Override
     public void removeStudent(String studentID) {
+        // Usuwa studenta z bazy danyhc
         String sql = "DELETE FROM students WHERE studentID = ?";
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, studentID);
@@ -62,6 +61,7 @@ public class StudentManagerImpl implements StudentManager {
 
     @Override
     public void updateStudent(String studentID, Student student) {
+        // Aktualizuje studenta z bazy danych
         String sql = "UPDATE students SET name = ?, age = ?, grade = ? WHERE studentID = ?";
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, student.getName());
@@ -79,9 +79,9 @@ public class StudentManagerImpl implements StudentManager {
     }
 
 
-
     @Override
     public ArrayList<Student> displayAllStudents() {
+        // Pobiera liste wszystkich studentwó z bazy danych
         ArrayList<Student> students = new ArrayList<>();
         String sql = "SELECT * FROM students";
         try (Connection conn = connect(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
@@ -103,6 +103,7 @@ public class StudentManagerImpl implements StudentManager {
 
     @Override
     public double calculateAverageGrade() {
+        // Oblicza średnią ocenę studentów
         String sql = "SELECT AVG(grade) AS averageGrade FROM students";
         try (Connection conn = connect(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             return rs.getDouble("averageGrade");

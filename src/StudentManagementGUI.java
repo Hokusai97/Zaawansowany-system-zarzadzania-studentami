@@ -6,6 +6,7 @@ import java.awt.*;
 public class StudentManagementGUI {
     private final StudentManagerImpl studentManager;
 
+    // Konstruktor który inicjalizuje GUI z menedżerem studentów.
     public StudentManagementGUI(StudentManagerImpl studentManager) {
         this.studentManager = studentManager;
     }
@@ -15,7 +16,7 @@ public class StudentManagementGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1400, 900);
 
-        // Panel na górze programu
+        // Panel na górze programu i tworzenie etykiet, pola tekstowe dla danych studenta
         JPanel inputPanel = new JPanel(new GridLayout(4, 2, 10, 10));
         frame.add(inputPanel, BorderLayout.NORTH);
 
@@ -29,7 +30,7 @@ public class StudentManagementGUI {
         JTextField gradeField = new JTextField();
 
 
-
+        // Dodawanie komponentów do panelu wejściowego
         inputPanel.add(idLabel);
         inputPanel.add(idField);
         inputPanel.add(nameLabel);
@@ -40,7 +41,7 @@ public class StudentManagementGUI {
         inputPanel.add(gradeField);
 
 
-        // Panel przycisków na dole
+        // Panel przycisków na dole, dodawanie przycisków z nazwami i dodawanie przycisków do panelu
         JPanel buttonPanel = new JPanel(new GridLayout(1, 6, 10, 10));
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
@@ -81,7 +82,7 @@ public class StudentManagementGUI {
                 JOptionPane.INFORMATION_MESSAGE);
 
 
-        // Obsługa buttonow
+        // Obsługa wszystkich przycisków
         addButton.addActionListener(e -> {
             try {
                 String id = idField.getText().trim();
@@ -166,7 +167,7 @@ public class StudentManagementGUI {
     }
 
 
-
+    // Metoda tworzeąca przycisk z określonym tesktem i rozmiarem
     private JButton createSmallButton(String text) {
         JButton button = new JButton(text);
         button.setPreferredSize(new Dimension(150, 40)); 
